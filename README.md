@@ -1,1 +1,30 @@
 # shubina_anna
+# Открываем исходный файл для чтения
+with open('devices.txt', 'r') as file:
+    lines = file.readlines()
+
+# Создаем словарь для хранения данных
+data = {}
+
+# Обходим каждую строку в файле
+for line in lines:
+    line = line.strip().split('*')
+    # Используем тип устройства и объем оперативной памяти в качестве ключа
+    key = (line[2], line[5])
+    # Увеличиваем счетчик для данного типа устройства и объема памяти
+    data[key] = data.get(key, 0) + 1
+
+# Открываем файл для записи
+with open('count_company.txt', 'w') as file:
+    for device_type in ['Ultrabook', 'Notebook', 'Netbook']:
+        file.write(f'{device_type}\n')
+        # Получаем только данные для данного типа устройства
+        filtered_data = {k: v for k, v in data.items() if k[0] == device_type}
+        for ram, count in filtered_data.items():
+            file.write(f'{ram[1]} - {count}\n')
+        file.write('\n')
+
+# Выводим характеристику для ультрабука
+ultrabook_data = {k: v for k, v in data.items() if k[0] == 'Ultrabook'}
+for ram, count in ultrabook_data.items():
+    print(f'{ram[1]} - {count}')
