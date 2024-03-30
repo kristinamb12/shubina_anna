@@ -1,4 +1,4 @@
-# shubina_anna
+#задача1
 # Открываем исходный файл для чтения
 with open('devices.txt', 'r') as file:
     lines = file.readlines()
@@ -28,3 +28,22 @@ with open('count_company.txt', 'w') as file:
 ultrabook_data = {k: v for k, v in data.items() if k[0] == 'Ultrabook'}
 for ram, count in ultrabook_data.items():
     print(f'{ram[1]} - {count}')
+
+#задача2
+# Открываем исходный файл для чтения
+with open('devices.txt', 'r') as file:
+    lines = file.readlines()
+
+# Создаем список для хранения данных
+data = []
+
+# Обходим каждую строку в файле и добавляем в список
+for line in lines:
+    data.append(line.strip().split('*'))
+
+# Сортируем список по названию компании в обратном алфавитном порядке
+sorted_data = sorted(data, key=lambda x: x[0], reverse=True)
+
+# Выводим первые пять компаний в формате: <Company> - <Product> - <Price>
+for i in range(5):
+    print(f'{sorted_data[i][0]} - {sorted_data[i][1]} - {sorted_data[i][8]}')
