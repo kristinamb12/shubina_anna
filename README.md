@@ -132,3 +132,32 @@ companies_profit = calculate_total_profit(data)
 # Вывод информации о суммарной прибыли каждой компании
 for company, profit in companies_profit.items():
     print(f"Если продать все ноутбуки {company} можно заработать {profit}.")
+
+#задача5
+# Импорт необходимых библиотек
+from collections import defaultdict
+
+# Функция для чтения данных из файла и формирования хэш-таблицы
+def create_hash_table(file_name):
+    hash_table = defaultdict(int)
+    with open(file_name, 'r') as file:
+        for line in file:
+            company, product, price = line.strip().split('*')[0], line.strip().split('*')[1], int(line.strip().split('*')[8])
+            key = company + " " + product
+            hash_table[key] = price
+    return hash_table
+
+# Чтение данных из файла и формирование хэш-таблицы
+file_name = 'devices.txt'
+hash_table = create_hash_table(file_name)
+
+# Вывод первых 10 значений сформированной таблицы
+count = 0
+for key, value in hash_table.items():
+    if count < 10:
+        company, product = key.split()
+        print(f"{company} {product} {value}")
+        count += 1
+    else:
+        break
+
