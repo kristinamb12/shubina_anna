@@ -47,6 +47,7 @@ sorted_data = sorted(data, key=lambda x: x[0], reverse=True)
 # Выводим первые пять компаний в формате: <Company> - <Product> - <Price>
 for i in range(5):
     print(f'{sorted_data[i][0]} - {sorted_data[i][1]} - {sorted_data[i][8]}')
+    
 #задача3
 # Функция для чтения данных из файла и преобразования их в структуру данных
 def read_data_from_file(file_name):
@@ -97,3 +98,37 @@ while True:
             f"{result[0]} {result[1]} - тип устройства: {result[2]}; Разрешение экрана - {result[3]}; Цена - {result[8]}")
     else:
         print("У нас нет данного устройства")
+
+#задача4
+# Функция для чтения данных из файла и преобразования их в структуру данных
+def read_data_from_file(file_name):
+    data = []
+    with open(file_name, 'r') as file:
+        for line in file:
+            data.append(tuple(line.strip().split('*')))
+    return data
+
+
+# Функция для подсчета суммарной прибыли от продажи продукции каждой компании
+def calculate_total_profit(data):
+    companies_profit = {}
+
+    for entry in data:
+        if entry[0] in companies_profit:
+            companies_profit[entry[0]] += int(entry[8])  # Увеличиваем суммарную прибыль компании
+        else:
+            companies_profit[entry[0]] = int(entry[8])  # Инициализируем суммарную прибыль компании
+
+    return companies_profit
+
+
+# Чтение данных из файла
+file_name = 'devices.txt'
+data = read_data_from_file(file_name)
+
+# Подсчет суммарной прибыли от продажи продукции каждой компании
+companies_profit = calculate_total_profit(data)
+
+# Вывод информации о суммарной прибыли каждой компании
+for company, profit in companies_profit.items():
+    print(f"Если продать все ноутбуки {company} можно заработать {profit}.")
